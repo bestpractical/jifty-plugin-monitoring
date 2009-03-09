@@ -8,7 +8,7 @@ package Jifty::Plugin::Monitoring::Command::Cron;
 
 package Jifty::Script::Cron;
 
-use base qw/App::CLI::Command/;
+use base qw/Jifty::Script/;
 
 =head1 NAME
 

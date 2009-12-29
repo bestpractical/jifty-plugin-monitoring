@@ -3,7 +3,7 @@ use warnings;
 
 package Jifty::Plugin::Monitoring;
 
-use base qw/Jifty::Plugin Exporter/;
+use base qw/Exporter Jifty::Plugin/;
 use Time::HiRes qw(gettimeofday tv_interval);
 
 our $VERSION = 0.01;

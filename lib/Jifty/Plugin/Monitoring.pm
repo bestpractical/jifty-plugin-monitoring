@@ -290,20 +290,22 @@ monitor is running.  Use this method to determine when "now" is.
 
 =cut
 
-=head2 run_monitors
+=head2 run_monitors [NAME, [NAME, ...]]
 
-For each monitor that we know of, checks to see if it is due to be
-run, and runs it if it is.
+For each monitor that we know of (or the set of monitors given),
+checks to see if it is due to be run, and runs it if it is.
 
 =cut
 
 sub run_monitors {
     my $self = shift;
+    my %only = map {+($_ => 1)} @_;
     return unless $self->lock;
     my $now = Jifty::DateTime->now->truncate( to => "minute" );
     $now->set_time_zone("UTC");
     $self->now($now);
     for my $name (keys %{$self->monitors}) {
+        next if keys %only and not $only{$name};
         my $last = $self->last_run($name);
         my %monitor = %{$self->monitors->{$name}};
         my $next = $last->last_run->add( $monitor{unit}."s" => $monitor{count} );

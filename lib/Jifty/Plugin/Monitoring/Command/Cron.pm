@@ -31,7 +31,8 @@ Takes no options.
 =head2 run
 
 Examines the application, looking for an instance of the monitoring
-plugin, and runs it.
+plugin, and runs it.  If a list of monitors is given to the command,
+it will only run those monitors.
 
 =cut
 
@@ -41,7 +42,7 @@ sub run {
 
     my ($monitor) = Jifty->find_plugin('Jifty::Plugin::Monitoring');
     die "Monitoring is not enabled for @{[Jifty->app_class]}\n" unless $monitor;
-    $monitor->run_monitors;
+    $monitor->run_monitors(@_);
 }
 
 =head2 filename
